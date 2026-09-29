@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}My Orders - CodeAlpha Store{% endblock %}
+{% block content %}
+<h1>My Orders</h1>
+{% for order in orders %}
+<div class="order-card">
+    <div class="order-head">
+        <strong>Order #{{ order.id }}</strong>
+        <span>{{ order.status }}</span>
+    </div>
+    <p>{{ order.created_at|date:"d M Y, h:i A" }}</p>
+    <ul>
+        {% for item in order.items.all %}
+            <li>{{ item.product.name }} × {{ item.quantity }} — ₹{{ item.subtotal }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Total: ₹{{ order.total_amount }}</h3>
+</div>
+{% empty %}
+<p>No orders yet.</p>
+{% endfor %}
+{% endblock %}

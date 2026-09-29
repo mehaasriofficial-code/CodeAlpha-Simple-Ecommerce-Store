@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Cart - CodeAlpha Store{% endblock %}
+{% block content %}
+<h1>Shopping Cart</h1>
+{% if items %}
+<div class="cart-list">
+    {% for item in items %}
+    <div class="cart-row">
+        <div>
+            <h3>{{ item.product.name }}</h3>
+            <p>₹{{ item.product.price }} each</p>
+        </div>
+        <form action="{% url 'update_cart' item.product.id %}" method="post" class="quantity-form">
+            {% csrf_token %}
+            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}">
+            <button class="button secondary" type="submit">Update</button>
+        </form>
+        <strong>₹{{ item.subtotal }}</strong>
+        <a class="danger-link" href="{% url 'remove_from_cart' item.product.id %}">Remove</a>
+    </div>
+    {% endfor %}
+</div>
+<div class="summary">
+    <h2>Total: ₹{{ total }}</h2>
+    {% if user.is_authenticated %}
+        <a class="button" href="{% url 'checkout' %}">Proceed to Checkout</a>
+    {% else %}
+        <p>Please login to checkout.</p>
+        <a class="button" href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+{% else %}
+    <div class="empty">
+        <h2>Your cart is empty</h2>
+        <a class="button" href="{% url 'home' %}">Continue Shopping</a>
+    </div>
+{% endif %}
+{% endblock %}

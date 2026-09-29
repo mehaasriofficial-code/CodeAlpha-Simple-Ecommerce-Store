@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Checkout - CodeAlpha Store{% endblock %}
+{% block content %}
+<h1>Checkout</h1>
+<div class="checkout-grid">
+    <form method="post" class="form-card">
+        {% csrf_token %}
+        <label>Full Name</label>
+        <input name="full_name" required value="{{ user.get_full_name }}">
+        <label>Email</label>
+        <input type="email" name="email" required value="{{ user.email }}">
+        <label>Delivery Address</label>
+        <textarea name="address" rows="5" required></textarea>
+        <button class="button" type="submit">Place Order</button>
+    </form>
+
+    <div class="form-card">
+        <h2>Order Summary</h2>
+        {% for item in items %}
+            <p>{{ item.product.name }} × {{ item.quantity }} <strong>₹{{ item.subtotal }}</strong></p>
+        {% endfor %}
+        <hr>
+        <h2>Total: ₹{{ total }}</h2>
+    </div>
+</div>
+{% endblock %}

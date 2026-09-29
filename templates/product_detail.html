@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} - CodeAlpha Store{% endblock %}
+{% block content %}
+<div class="detail">
+    {% if product.image_url %}
+        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+    {% endif %}
+    <div>
+        <p class="eyebrow">PRODUCT DETAILS</p>
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <h2 class="price">₹{{ product.price }}</h2>
+        <p>Available stock: {{ product.stock }}</p>
+        {% if product.stock %}
+            <a class="button" href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

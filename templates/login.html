@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Login - CodeAlpha Store{% endblock %}
+{% block content %}
+<div class="auth-card">
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button" type="submit">Login</button>
+    </form>
+    <p>New user? <a href="{% url 'register' %}">Create an account</a></p>
+</div>
+{% endblock %}
